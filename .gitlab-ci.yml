@@ -34,8 +34,8 @@ stages:
 build:
     stage: build
     variables:
-        REPO_NAME: rgru-file-uploader
-        BUILD_PATH: /builds/masterback/rgru-file-uploader
+        REPO_NAME: monitor
+        BUILD_PATH: /builds/masterback/monitor
     script:
 
         - echo 'Copying to files to /go/src and go there------------------------------'
@@ -62,8 +62,8 @@ build:
 deploy&copy:
     stage: deploy&copy
     variables:
-        IMAGE_NAME: rgru-file-uploader-prod
-        BUILD_PATH: /builds/masterback/rgru-file-uploader
+        IMAGE_NAME: monitor-prod
+        BUILD_PATH: /builds/masterback/monitor
     dependencies:
         - build
     script:
@@ -90,8 +90,8 @@ deploy&copy:
 deploy&compose:
     stage: deploy&compose
     variables:
-        IMAGE_NAME: rgru-file-uploader-prod
-        BUILD_PATH: /builds/masterback/rgru-file-uploader
+        IMAGE_NAME: monitor-prod
+        BUILD_PATH: /builds/masterback/monitor
     dependencies:
         - deploy&copy
     script:
@@ -107,7 +107,7 @@ deploy&compose:
         - echo "$DEPLOY_RSA_PRIVATE_KEY" | base64 --decode > /root/.ssh/id_rsa
         - chmod 600 /root/.ssh/id_rsa && chmod 700 /root/.ssh
         # !!! start real deploy and docker-compose
-        - ssh gitupdater@notify.rg.ru rgru-file-uploader-prod
+        - ssh gitupdater@notify.rg.ru monitor-prod
     only:
         - production
 
