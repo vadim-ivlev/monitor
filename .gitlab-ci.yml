@@ -37,16 +37,18 @@ build:
         REPO_NAME: monitor
         BUILD_PATH: /builds/masterback/monitor
     script:
-
-        - echo 'Copying to files to /go/src and go there------------------------------'
-        - mkdir -p /go/src/$REPO_NAME
-        - cp -r .  /go/src/$REPO_NAME
-        - cd       /go/src/$REPO_NAME
+        # where are we?
+        - hostnamectl
         - pwd
         - ls -lF --color
 
-        # building deploy directory 
-        - sh/build-deploy-directory.sh
+        # - echo 'Copying to files to /go/src and go there------------------------------'
+        # - mkdir -p /go/src/$REPO_NAME
+        # - cp -r .  /go/src/$REPO_NAME
+        # - cd       /go/src/$REPO_NAME
+
+        # # building deploy directory 
+        # - sh/build-deploy-directory.sh
 
         # collect files to deploy on prod
         - rm -rf   $BUILD_PATH/deploy
@@ -67,6 +69,11 @@ deploy&copy:
     dependencies:
         - build
     script:
+        # where are we?
+        - hostnamectl
+        - pwd
+        - ls -lF --color
+
         # import ssh-key
         # use key name: deploy_gitupdater_works_base64
         # public key added by user "chagin"
@@ -78,12 +85,13 @@ deploy&copy:
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
         - echo "$PROD_RSA_PRIVATE_KEY" | base64 --decode > /root/.ssh/id_rsa
         - chmod 600 /root/.ssh/id_rsa && chmod 700 /root/.ssh
-        # deploy to server 212.69.111.246
-        - ls -lF
+        
+        # deploy to server 
+
         # remove old dir
-        - ssh gitupdater@212.69.111.246 'rm -rf /home/gitupdater/'$IMAGE_NAME
+        - ssh gitupdater@dockerweb.rgwork.ru 'rm -rf /home/gitupdater/'$IMAGE_NAME
         # copy new dir on server
-        - scp -pr $BUILD_PATH/deploy gitupdater@212.69.111.246:/home/gitupdater/$IMAGE_NAME
+        - scp -pr $BUILD_PATH/deploy gitupdater@dockerweb.rgwork.ru:/home/gitupdater/$IMAGE_NAME
     only:
         - production
 
@@ -106,8 +114,9 @@ deploy&compose:
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
         - echo "$DEPLOY_RSA_PRIVATE_KEY" | base64 --decode > /root/.ssh/id_rsa
         - chmod 600 /root/.ssh/id_rsa && chmod 700 /root/.ssh
+        
         # !!! start real deploy and docker-compose
-        - ssh gitupdater@notify.rg.ru monitor-prod
+        - ssh gitupdater@dockerweb.rgwork.ru monitor-prod
     only:
         - production
 
