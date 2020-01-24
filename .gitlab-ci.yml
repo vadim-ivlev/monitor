@@ -38,7 +38,7 @@ build:
         BUILD_PATH: /builds/masterback/monitor
     script:
         # where are we?
-        - hostnamectl
+        - hostname
         - pwd
         - ls -lF --color
 
@@ -70,7 +70,7 @@ deploy&copy:
         - build
     script:
         # where are we?
-        - hostnamectl
+        - hostname
         - pwd
         - ls -lF --color
 
