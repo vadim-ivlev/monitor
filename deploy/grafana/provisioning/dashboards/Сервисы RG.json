@@ -14,7 +14,7 @@
   },
   "editable": true,
   "gnetId": null,
-  "graphTooltip": 0,
+  "graphTooltip": 1,
   "id": 5,
   "links": [],
   "panels": [
@@ -33,7 +33,7 @@
       "type": "row"
     },
     {
-      "content": "\n# file-uploader\n\n##### Микросервис загрузки файлов, и обрезки загруженных изображений\n\n- **url:**  https://file-uploader.rg.ru/\n\n- **metrics:** https://file-uploader.rg.ru/metrics\n\n- **git:** https://git.rgwork.ru/masterback/rgru-file-uploader\n\n\n\n\n",
+      "content": "\n# file-uploader\n\nМикросервис загрузки файлов, и обрезки загруженных изображений\n\n- **url:**  https://file-uploader.rg.ru/\n\n- **metrics:** https://file-uploader.rg.ru/metrics\n\n- **git:** https://git.rgwork.ru/masterback/rgru-file-uploader\n\n\n\n\n",
       "datasource": null,
       "gridPos": {
         "h": 5,
@@ -306,10 +306,10 @@
       "type": "row"
     },
     {
-      "content": "\n# auth-proxy\n\n- **admin:**&nbsp;&nbsp;&nbsp;  https://auth-proxy.rg.ru/admin\n\n- **metrics:** https://auth-proxy.rg.ru/metrics\n\n- **git:** https://git.rgwork.ru/masterback/auth-proxy\n\n\n",
+      "content": "\n# auth-proxy\n\nПользовательская авторизация\n\n- **admin:**&nbsp;&nbsp;&nbsp;  https://auth-proxy.rg.ru/admin\n\n- **metrics:** https://auth-proxy.rg.ru/metrics\n\n- **git:** https://git.rgwork.ru/masterback/auth-proxy\n\n\n",
       "datasource": null,
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 24,
         "x": 0,
         "y": 14
@@ -330,7 +330,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 18
+        "y": 20
       },
       "id": 6,
       "links": [],
@@ -398,7 +398,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 18
+        "y": 20
       },
       "hiddenSeries": false,
       "id": 2,
@@ -487,7 +487,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 18
+        "y": 20
       },
       "hiddenSeries": false,
       "id": 13,
@@ -563,7 +563,7 @@
       }
     }
   ],
-  "refresh": "",
+  "refresh": "5s",
   "schemaVersion": 21,
   "style": "dark",
   "tags": [],
@@ -591,5 +591,5 @@
   "timezone": "",
   "title": "Сервисы RG",
   "uid": "toopdhyWk",
-  "version": 5
+  "version": 9
 }
