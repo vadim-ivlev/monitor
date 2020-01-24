@@ -40,7 +40,7 @@ build:
         # where are we?
         - hostname
         - pwd
-        - ls -lF --color
+        - ls -lF
 
         # - echo 'Copying to files to /go/src and go there------------------------------'
         # - mkdir -p /go/src/$REPO_NAME
@@ -51,8 +51,8 @@ build:
         # - sh/build-deploy-directory.sh
 
         # collect files to deploy on prod
-        - rm -rf   $BUILD_PATH/deploy
-        - cp -r    deploy $BUILD_PATH
+        # - rm -rf   $BUILD_PATH/deploy
+        # - cp -r    deploy $BUILD_PATH
         - mkdir -p $BUILD_PATH/deploy/configs
     artifacts:
         paths:
