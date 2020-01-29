@@ -20,6 +20,24 @@
   "links": [],
   "panels": [
     {
+      "content": "<div style=\"color:gray; font-size:70px; font-weight:bold; text-align: center; font-variant: small-caps;\">\nКонтейнеры\n</div>\n<p style=\"font-size:20px;text-align: center\">\nМетрики контейнеров RG.RU\n</p>\n\n\n",
+      "datasource": null,
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 17,
+      "mode": "html",
+      "options": {},
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transparent": true,
+      "type": "text"
+    },
+    {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
@@ -44,7 +62,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 0
+        "y": 4
       },
       "hideTimeOverride": true,
       "id": 4,
@@ -132,7 +150,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 0
+        "y": 4
       },
       "id": 7,
       "interval": null,
@@ -219,7 +237,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 0
+        "y": 4
       },
       "hideTimeOverride": true,
       "id": 5,
@@ -308,7 +326,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 0
+        "y": 4
       },
       "hideTimeOverride": true,
       "id": 2,
@@ -397,7 +415,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 0
+        "y": 4
       },
       "hideTimeOverride": true,
       "id": 6,
@@ -486,7 +504,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 0
+        "y": 4
       },
       "hideTimeOverride": true,
       "id": 3,
@@ -565,7 +583,7 @@
         "h": 4,
         "w": 8,
         "x": 0,
-        "y": 4
+        "y": 8
       },
       "hiddenSeries": false,
       "id": 9,
@@ -662,7 +680,7 @@
         "h": 4,
         "w": 8,
         "x": 8,
-        "y": 4
+        "y": 8
       },
       "hiddenSeries": false,
       "id": 10,
@@ -764,7 +782,7 @@
         "h": 4,
         "w": 8,
         "x": 16,
-        "y": 4
+        "y": 8
       },
       "hiddenSeries": false,
       "id": 15,
@@ -895,7 +913,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 8
+        "y": 12
       },
       "hiddenSeries": false,
       "id": 8,
@@ -994,7 +1012,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 8
+        "y": 12
       },
       "hiddenSeries": false,
       "id": 12,
@@ -1093,7 +1111,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 8
+        "y": 12
       },
       "hiddenSeries": false,
       "id": 11,
@@ -1192,7 +1210,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 15
+        "y": 19
       },
       "hiddenSeries": false,
       "id": 13,
@@ -1291,7 +1309,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 15
+        "y": 19
       },
       "hiddenSeries": false,
       "id": 14,
@@ -1416,5 +1434,5 @@
   "timezone": "browser",
   "title": "Docker Containers",
   "uid": "7j9wPhyZk",
-  "version": 2
+  "version": 4
 }
