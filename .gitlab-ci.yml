@@ -50,8 +50,8 @@ deploy&copy:
     variables:
         IMAGE_NAME: monitor-prod
         BUILD_PATH: /builds/masterback/monitor
-    dependencies:
-        - build
+    # dependencies:
+    #     - build
     script:        
         - ./.import-ssh-key.sh "$PROD_RSA_PRIVATE_KEY"
         # remove old dir on the server
