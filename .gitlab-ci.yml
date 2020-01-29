@@ -5,7 +5,7 @@ image: golang:1.12.7
 
 stages:
     # - test
-    - build
+    # - build
     # - deploy&test
     - deploy&copy
     - deploy&compose
@@ -31,35 +31,19 @@ stages:
 #     - chmod 600 /root/.ssh/id_rsa_deploy
 
 
-build:
-    stage: build
-    variables:
-        REPO_NAME: monitor
-        BUILD_PATH: /builds/masterback/monitor
-    script:
-        # where are we?
-        - hostname
-        - pwd
-        - ls -lF
-
-        # - echo 'Copying to files to /go/src and go there------------------------------'
-        # - mkdir -p /go/src/$REPO_NAME
-        # - cp -r .  /go/src/$REPO_NAME
-        # - cd       /go/src/$REPO_NAME
-
-        # # building deploy directory 
-        # - sh/build-deploy-directory.sh
-
-        # collect files to deploy on prod
-        # - rm -rf   $BUILD_PATH/deploy
-        # - cp -r    deploy $BUILD_PATH
-        - mkdir -p $BUILD_PATH/deploy/configs
-    artifacts:
-        paths:
-            - $BUILD_PATH/deploy
-        expire_in: 60 minutes
-    only:
-        - production
+# build:
+#     stage: build
+#     variables:
+#         REPO_NAME: monitor
+#         BUILD_PATH: /builds/masterback/monitor
+#     script:
+#         - mkdir -p $BUILD_PATH/deploy/configs
+#     artifacts:
+#         paths:
+#             - $BUILD_PATH/deploy
+#         expire_in: 60 minutes
+#     only:
+#         - production
 
 deploy&copy:
     stage: deploy&copy
@@ -68,32 +52,15 @@ deploy&copy:
         BUILD_PATH: /builds/masterback/monitor
     dependencies:
         - build
-    script:
-        # where are we?
-        - hostname
-        - pwd
-        - ls -lF --color
-
-        # import ssh-key
-        # use key name: deploy_gitupdater_works_base64
-        # public key added by user "chagin"
-        - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-        - eval $(ssh-agent -s)
-        # Attention! Key need convert in base64 and add in secret variable PROD_RSA_PRIVATE_KEY
-        - ssh-add <(echo "$PROD_RSA_PRIVATE_KEY" | base64 --decode)
-        - mkdir -p /root/.ssh
-        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-        - echo "$PROD_RSA_PRIVATE_KEY" | base64 --decode > /root/.ssh/id_rsa
-        - chmod 600 /root/.ssh/id_rsa && chmod 700 /root/.ssh
-        
-        # deploy to server 
-
-        # remove old dir
+    script:        
+        - ./.import-ssh-key.sh "$PROD_RSA_PRIVATE_KEY"
+        # remove old dir on the server
         - ssh gitupdater@dockerweb.rgwork.ru 'rm -rf /home/gitupdater/'$IMAGE_NAME
         # copy new dir on server
         - scp -pr $BUILD_PATH/deploy gitupdater@dockerweb.rgwork.ru:/home/gitupdater/$IMAGE_NAME
     only:
         - production
+
 
 deploy&compose:
     stage: deploy&compose
@@ -103,32 +70,11 @@ deploy&compose:
     dependencies:
         - deploy&copy
     script:
-        # import ssh-key
-        # use key name: deploy_gitupdater_base64
-        # public key added by user "chagin"
-        - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-        - eval $(ssh-agent -s)
-        # Attention! Key need convert in base64 and add in secret variable DEPLOY_RSA_PRIVATE_KEY
-        - ssh-add <(echo "$DEPLOY_RSA_PRIVATE_KEY" | base64 --decode)
-        - mkdir -p /root/.ssh
-        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-        - echo "$DEPLOY_RSA_PRIVATE_KEY" | base64 --decode > /root/.ssh/id_rsa
-        - chmod 600 /root/.ssh/id_rsa && chmod 700 /root/.ssh
-        
+        - ./.import-ssh-key.sh "$DEPLOY_RSA_PRIVATE_KEY"
         # !!! start real deploy and docker-compose
         - ssh gitupdater@dockerweb.rgwork.ru monitor-prod
     only:
         - production
-
-
-
-# deploy&test:
-#     stage: deploy&test 
-#     script:
-#         # import ssh-key
-#         - echo $PROD_RSA_PRIVATE_KEY
-#     only:
-#         - test
 
 
 
@@ -143,6 +89,7 @@ message_on_success:
         - curl -v http://proxy.govoru.com/?message=%E2%9C%85%20Success.%20Auto%20deploy%20on%20${CI_PROJECT_NAME}%20is%20completed,%20Pipeline:%20${CI_PIPELINE_URL}%20by%20${GITLAB_USER_LOGIN}
     only:
         - production
+
 
 message_on_failure:
     stage: message_on_failure
