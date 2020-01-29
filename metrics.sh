@@ -18,7 +18,7 @@ go_info {version = "go1.12.7"} 1
 + go_memstats_alloc_bytes 2.854808e + 06
 # HELP go_memstats_alloc_bytes_total Общее количество выделенных байтов, даже если оно освобождено.
 # TYPE go_memstats_alloc_bytes_total counter
-- go_memstats_alloc_bytes_total 1.5150964e + 08
++ go_memstats_alloc_bytes_total 1.5150964e + 08
 # HELP go_memstats_buck_hash_sys_bytes Количество байтов, используемых хеш-таблицей профилирования.
 # TYPE go_memstats_buck_hash_sys_bytes gauge
 go_memstats_buck_hash_sys_bytes 1.455322e + 06
@@ -57,7 +57,7 @@ go_memstats_last_gc_time_seconds 1.5801376185495913e + 09
 go_memstats_lookups_total 0
 # HELP go_memstats_mallocs_total Общее количество malloc.
 # TYPE go_memstats_mallocs_total counter
-- go_memstats_mallocs_total 267134
++ go_memstats_mallocs_total 267134
 # HELP go_memstats_mcache_inuse_bytes Количество байтов, используемых структурами mcache.
 # TYPE go_memstats_mcache_inuse_bytes gauge
 go_memstats_mcache_inuse_bytes 17360
@@ -108,7 +108,7 @@ process_open_fds 7
 process_resident_memory_bytes 1.8006016e + 07
 # HELP process_start_time_seconds Время начала процесса с начала эпохи Unix в секундах.
 # TYPE process_start_time_seconds gauge
-- process_start_time_seconds 1.58013626998e + 09
+-? process_start_time_seconds 1.58013626998e + 09
 # HELP process_virtual_memory_bytes Размер виртуальной памяти в байтах.
 # TYPE process_virtual_memory_bytes gauge
 process_virtual_memory_bytes 1.221632e + 08

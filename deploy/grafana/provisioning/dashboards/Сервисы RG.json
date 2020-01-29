@@ -12,38 +12,25 @@
       }
     ]
   },
+  "description": "Монитроинг GO приложений RG",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
   "id": 5,
-  "iteration": 1580223544337,
+  "iteration": 1580296802406,
   "links": [],
   "panels": [
     {
-      "collapsed": false,
+      "content": "\n<br>\n<br>\n<div style=\"color:gray; font-size:40px; font-weight:bold; text-align: center\">\n[[job]]\n</div>\n<p style=\"font-size:20px;text-align: center\">\nМетрики Go приложений RG.RU\n</p>",
       "datasource": null,
       "gridPos": {
-        "h": 1,
+        "h": 4,
         "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 17,
-      "panels": [],
-      "title": "Go приложение",
-      "type": "row"
-    },
-    {
-      "content": "\n# [[job]]\n\n\n\n",
-      "datasource": null,
-      "gridPos": {
-        "h": 2,
-        "w": 24,
-        "x": 0,
-        "y": 1
-      },
       "id": 19,
-      "mode": "markdown",
+      "mode": "html",
       "options": {},
       "timeFrom": null,
       "timeShift": null,
@@ -55,10 +42,72 @@
       "cacheTimeout": null,
       "datasource": null,
       "gridPos": {
-        "h": 4,
-        "w": 20,
+        "h": 5,
+        "w": 6,
         "x": 0,
-        "y": 3
+        "y": 4
+      },
+      "id": 21,
+      "links": [],
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "defaults": {
+            "mappings": [
+              {
+                "id": 0,
+                "op": "=",
+                "text": "N/A",
+                "type": 1,
+                "value": "null"
+              }
+            ],
+            "max": 100,
+            "min": 0,
+            "nullValueMode": "connected",
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ],
+            "unit": "none"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal"
+      },
+      "pluginVersion": "6.5.3",
+      "targets": [
+        {
+          "expr": "go_memstats_sys_bytes{job=~\"${job:regex}\"} /1024 /1024",
+          "format": "time_series",
+          "instant": false,
+          "legendFormat": "{{job}}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Память мегабайт. # Number of Megabytes obtained from system",
+      "type": "bargauge"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": null,
+      "gridPos": {
+        "h": 5,
+        "w": 18,
+        "x": 6,
+        "y": 4
       },
       "id": 24,
       "links": [],
@@ -115,72 +164,10 @@
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": null,
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 0,
-        "y": 7
-      },
-      "id": 21,
-      "links": [],
-      "options": {
-        "displayMode": "lcd",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "defaults": {
-            "decimals": 1,
-            "mappings": [
-              {
-                "id": 0,
-                "op": "=",
-                "text": "N/A",
-                "type": 1,
-                "value": "null"
-              }
-            ],
-            "max": 200,
-            "min": 0,
-            "nullValueMode": "connected",
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 190
-              }
-            ],
-            "unit": "none"
-          },
-          "override": {},
-          "values": false
-        },
-        "orientation": "horizontal"
-      },
-      "pluginVersion": "6.5.3",
-      "targets": [
-        {
-          "expr": "go_memstats_sys_bytes{job=~\"${job:regex}\"} /1024 /1024",
-          "format": "time_series",
-          "instant": false,
-          "legendFormat": "{{job}}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Память мегабайт. # Number of Megabytes obtained from system",
-      "type": "bargauge"
-    },
-    {
       "aliasColors": {
-        "auth-proxy": "blue",
+        "auth-proxy": "purple",
         "auth_proxy_requests_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "light-blue",
+        "file-uploader": "super-light-green",
         "file_uploader_requests_total{instance=\"file-uploader.rg.ru:80\",job=\"file-uploader\"}": "semi-dark-orange",
         "{instance=\"file-uploader.rg.ru:80\",job=\"file-uploader\"}": "dark-green"
       },
@@ -192,9 +179,9 @@
       "fillGradient": 5,
       "gridPos": {
         "h": 6,
-        "w": 5,
-        "x": 5,
-        "y": 7
+        "w": 8,
+        "x": 0,
+        "y": 9
       },
       "hiddenSeries": false,
       "id": 20,
@@ -219,12 +206,13 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
           "expr": "rate(http_requests_total{job=~\"${job:regex}\"}[1m])*60",
           "format": "time_series",
+          "intervalFactor": 2,
           "legendFormat": "{{job}}",
           "refId": "A"
         }
@@ -250,7 +238,7 @@
       "yaxes": [
         {
           "format": "short",
-          "label": null,
+          "label": "http_requests_total",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -272,8 +260,9 @@
     },
     {
       "aliasColors": {
-        "auth-proxy": "blue",
+        "auth-proxy": "purple",
         "auth_proxy_requests_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "light-blue",
+        "file-uploader": "super-light-green",
         "graphql_errors_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "red",
         "{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "red"
       },
@@ -285,9 +274,9 @@
       "fillGradient": 5,
       "gridPos": {
         "h": 6,
-        "w": 5,
-        "x": 10,
-        "y": 7
+        "w": 8,
+        "x": 8,
+        "y": 9
       },
       "hiddenSeries": false,
       "id": 22,
@@ -343,7 +332,7 @@
       "yaxes": [
         {
           "format": "short",
-          "label": null,
+          "label": "graphql_errors_total",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -365,7 +354,7 @@
     },
     {
       "aliasColors": {
-        "auth-proxy": "blue",
+        "auth-proxy": "purple",
         "auth_proxy_requests_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "light-blue",
         "graphql_errors_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "red",
         "{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "orange"
@@ -378,9 +367,9 @@
       "fillGradient": 5,
       "gridPos": {
         "h": 6,
-        "w": 5,
-        "x": 15,
-        "y": 7
+        "w": 8,
+        "x": 16,
+        "y": 9
       },
       "hiddenSeries": false,
       "id": 25,
@@ -405,7 +394,7 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
@@ -436,7 +425,7 @@
       "yaxes": [
         {
           "format": "short",
-          "label": null,
+          "label": "process_cpu_seconds_total",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -458,7 +447,9 @@
     },
     {
       "aliasColors": {
+        "auth-proxy": "purple",
         "auth_proxy_requests_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "light-blue",
+        "file-uploader": "super-light-green",
         "graphql_errors_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "red",
         "{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "orange"
       },
@@ -470,9 +461,199 @@
       "fillGradient": 5,
       "gridPos": {
         "h": 6,
-        "w": 5,
-        "x": 15,
-        "y": 13
+        "w": 8,
+        "x": 0,
+        "y": 15
+      },
+      "hiddenSeries": false,
+      "id": 27,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rate(go_memstats_alloc_bytes_total{job=~\"${job:regex}\"}[1m])",
+          "format": "time_series",
+          "legendFormat": "{{job}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Скорость аллокации памяти (байт в секунду)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "go_memstats_alloc_bytes_total",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "auth-proxy": "purple",
+        "auth_proxy_requests_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "light-blue",
+        "file-uploader": "super-light-green",
+        "graphql_errors_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "red",
+        "{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "orange"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "fillGradient": 5,
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 8,
+        "y": 15
+      },
+      "hiddenSeries": false,
+      "id": 28,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rate(go_memstats_mallocs_total{job=~\"${job:regex}\"}[1m])",
+          "format": "time_series",
+          "legendFormat": "{{job}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Операций malloc в секунду",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "go_memstats_mallocs_total ",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "auth-proxy": "purple",
+        "auth_proxy_requests_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "light-blue",
+        "file-uploader": "super-light-green",
+        "graphql_errors_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "red",
+        "{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "orange"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "fillGradient": 5,
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 15
       },
       "hiddenSeries": false,
       "id": 26,
@@ -497,12 +678,13 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
           "expr": "go_memstats_alloc_bytes{job=~\"${job:regex}\"}/1024/1024",
           "format": "time_series",
+          "intervalFactor": 1,
           "legendFormat": "{{job}}",
           "refId": "A"
         }
@@ -528,572 +710,7 @@
       "yaxes": [
         {
           "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "collapsed": false,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 19
-      },
-      "id": 8,
-      "panels": [],
-      "title": "file-uploader",
-      "type": "row"
-    },
-    {
-      "content": "\n# file-uploader\n### [[job]]\n\n##### Микросервис загрузки файлов, и обрезки загруженных изображений\n\n- **url:**  https://file-uploader.rg.ru/\n\n- **metrics:** https://file-uploader.rg.ru/metrics\n\n- **git:** https://git.rgwork.ru/masterback/rgru-file-uploader\n\n\n\n\n",
-      "datasource": null,
-      "gridPos": {
-        "h": 5,
-        "w": 24,
-        "x": 0,
-        "y": 20
-      },
-      "id": 12,
-      "mode": "markdown",
-      "options": {},
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "Prometheus-outer",
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 0,
-        "y": 25
-      },
-      "id": 9,
-      "links": [],
-      "options": {
-        "displayMode": "lcd",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "defaults": {
-            "decimals": 1,
-            "mappings": [
-              {
-                "id": 0,
-                "op": "=",
-                "text": "N/A",
-                "type": 1,
-                "value": "null"
-              },
-              {
-                "from": "",
-                "id": 1,
-                "operator": "",
-                "text": "low",
-                "to": "",
-                "type": 1,
-                "value": ""
-              }
-            ],
-            "max": 100,
-            "min": 0,
-            "nullValueMode": "connected",
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ],
-            "title": "",
-            "unit": "none"
-          },
-          "override": {},
-          "values": false
-        },
-        "orientation": "horizontal"
-      },
-      "pluginVersion": "6.5.3",
-      "targets": [
-        {
-          "expr": "go_memstats_heap_sys_bytes{job=\"file-uploader\"} / 1024 / 1024",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Number of heap Megabytes obtained from system",
-      "type": "bargauge"
-    },
-    {
-      "aliasColors": {
-        "auth_proxy_requests_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "light-blue",
-        "file_uploader_requests_total{instance=\"file-uploader.rg.ru:80\",job=\"file-uploader\"}": "semi-dark-orange",
-        "{instance=\"file-uploader.rg.ru:80\",job=\"file-uploader\"}": "dark-green"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fill": 1,
-      "fillGradient": 5,
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 5,
-        "y": 25
-      },
-      "hiddenSeries": false,
-      "id": 10,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(http_requests_total{job=\"file-uploader\"}[1m])*60",
-          "format": "time_series",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "HTTP запросы в минуту",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {
-        "auth_proxy_requests_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "light-blue",
-        "file_uploader_requests_total{instance=\"file-uploader.rg.ru:80\",job=\"file-uploader\"}": "semi-dark-orange",
-        "graphql_errors_total{instance=\"file-uploader.rg.ru:80\",job=\"file-uploader\"}": "red",
-        "{instance=\"file-uploader.rg.ru:80\",job=\"file-uploader\"}": "red"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fill": 1,
-      "fillGradient": 5,
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 10,
-        "y": 25
-      },
-      "hiddenSeries": false,
-      "id": 14,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(graphql_errors_total{job=\"file-uploader\"}[1m])*60",
-          "format": "time_series",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "GraphQL ошибки в минуту",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "collapsed": false,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 31
-      },
-      "id": 4,
-      "panels": [],
-      "title": "auth-proxy",
-      "type": "row"
-    },
-    {
-      "content": "\n# auth-proxy\n\n- **admin:**&nbsp;&nbsp;&nbsp;  https://auth-proxy.rg.ru/admin\n\n- **metrics:** https://auth-proxy.rg.ru/metrics\n\n- **git:** https://git.rgwork.ru/masterback/auth-proxy\n\n\n",
-      "datasource": null,
-      "gridPos": {
-        "h": 4,
-        "w": 24,
-        "x": 0,
-        "y": 32
-      },
-      "id": 15,
-      "mode": "markdown",
-      "options": {},
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 0,
-        "y": 36
-      },
-      "id": 6,
-      "links": [],
-      "options": {
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "defaults": {
-            "decimals": 1,
-            "mappings": [
-              {
-                "id": 0,
-                "op": "=",
-                "text": "N/A",
-                "type": 1,
-                "value": "null"
-              }
-            ],
-            "max": 100,
-            "min": 0,
-            "nullValueMode": "connected",
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ],
-            "unit": "none"
-          },
-          "override": {},
-          "values": false
-        },
-        "orientation": "horizontal",
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "6.5.3",
-      "targets": [
-        {
-          "expr": "go_memstats_sys_bytes{job=\"auth-proxy\"} /1024 /1024",
-          "instant": false,
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Память мегабайт. # Number of Megabytes obtained from system",
-      "type": "gauge"
-    },
-    {
-      "aliasColors": {
-        "auth-proxy.rg.ru:80": "red",
-        "auth_proxy_requests_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "light-blue",
-        "{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "blue"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus-outer",
-      "fill": 1,
-      "fillGradient": 5,
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 5,
-        "y": 36
-      },
-      "hiddenSeries": false,
-      "id": 2,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(http_requests_total{job=\"auth-proxy\"}[1m])*60",
-          "format": "time_series",
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{instance}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "HTTP запросы в минуту",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {
-        "auth_proxy_requests_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "light-blue",
-        "graphql_errors_total{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "red",
-        "{instance=\"auth-proxy.rg.ru:80\",job=\"auth-proxy\"}": "red"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fill": 1,
-      "fillGradient": 5,
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 10,
-        "y": 36
-      },
-      "hiddenSeries": false,
-      "id": 13,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(graphql_errors_total{job=\"auth-proxy\"}[1m])*60",
-          "format": "time_series",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "GraphQL ошибки в минуту",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
+          "label": "go_memstats_alloc_bytes",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -1117,12 +734,15 @@
   "refresh": "5s",
   "schemaVersion": 21,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "rg"
+  ],
   "templating": {
     "list": [
       {
         "allValue": null,
         "current": {
+          "selected": false,
           "tags": [],
           "text": "auth-proxy + file-uploader",
           "value": [
@@ -1179,5 +799,5 @@
   "timezone": "",
   "title": "Сервисы RG",
   "uid": "toopdhyWk",
-  "version": 14
+  "version": 22
 }
