@@ -1,3 +1,5 @@
+# Метрики Golang приложений
+
 # HELP go_gc_duration_seconds Сводка продолжительности вызовов GC.
 # TYPE go_gc_duration_seconds summary
 go_gc_duration_seconds {quantile = "0"} 1.925e-05

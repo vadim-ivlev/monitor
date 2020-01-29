@@ -1,7 +1,5 @@
 image: golang:1.12.7
 
-# variables:
-#   GIT_SUBMODULE_STRATEGY: recursive
 variables:
     IMAGE_NAME: monitor-prod
     BUILD_PATH: /builds/masterback/monitor
@@ -15,9 +13,6 @@ stages:
 
 deploy&copy:
     stage: deploy&copy
-    # variables:
-    #     IMAGE_NAME: monitor-prod
-    #     BUILD_PATH: /builds/masterback/monitor
     script:        
         - ./.import-ssh-key.sh "$PROD_RSA_PRIVATE_KEY"
         # remove old dir on the server
@@ -30,9 +25,6 @@ deploy&copy:
 
 deploy&compose:
     stage: deploy&compose
-    # variables:
-    #     IMAGE_NAME: monitor-prod
-    #     BUILD_PATH: /builds/masterback/monitor
     dependencies:
         - deploy&copy
     script:
