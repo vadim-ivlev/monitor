@@ -2,38 +2,22 @@ image: golang:1.12.7
 
 # variables:
 #   GIT_SUBMODULE_STRATEGY: recursive
+variables:
+    IMAGE_NAME: monitor-prod
+    BUILD_PATH: /builds/masterback/monitor
 
 stages:
-    # - test
-    # - build
-    # - deploy&test
     - deploy&copy
     - deploy&compose
     - message_on_success
     - message_on_failure
 
 
-# build:
-#     stage: build
-#     variables:
-#         REPO_NAME: monitor
-#         BUILD_PATH: /builds/masterback/monitor
-#     script:
-#         - mkdir -p $BUILD_PATH/deploy/configs
-#     artifacts:
-#         paths:
-#             - $BUILD_PATH/deploy
-#         expire_in: 60 minutes
-#     only:
-#         - production
-
 deploy&copy:
     stage: deploy&copy
-    variables:
-        IMAGE_NAME: monitor-prod
-        BUILD_PATH: /builds/masterback/monitor
-    # dependencies:
-    #     - build
+    # variables:
+    #     IMAGE_NAME: monitor-prod
+    #     BUILD_PATH: /builds/masterback/monitor
     script:        
         - ./.import-ssh-key.sh "$PROD_RSA_PRIVATE_KEY"
         # remove old dir on the server
@@ -46,22 +30,12 @@ deploy&copy:
 
 deploy&compose:
     stage: deploy&compose
-    variables:
-        IMAGE_NAME: monitor-prod
-        BUILD_PATH: /builds/masterback/monitor
+    # variables:
+    #     IMAGE_NAME: monitor-prod
+    #     BUILD_PATH: /builds/masterback/monitor
     dependencies:
         - deploy&copy
     script:
-
-        # - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-        # - eval $(ssh-agent -s)
-        # # Attention! Key need convert in base64 and add in secret variable DEPLOY_RSA_PRIVATE_KEY
-        # - ssh-add <(echo "$DEPLOY_RSA_PRIVATE_KEY" | base64 --decode)
-        # - mkdir -p /root/.ssh
-        # - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-        # - echo "$DEPLOY_RSA_PRIVATE_KEY" | base64 --decode > /root/.ssh/id_rsa
-        # - chmod 600 /root/.ssh/id_rsa && chmod 700 /root/.ssh
-
         - ./.import-ssh-key.sh "$DEPLOY_RSA_PRIVATE_KEY"
         # !!! start real deploy and docker-compose
         - ssh gitupdater@dockerweb.rgwork.ru monitor-prod
