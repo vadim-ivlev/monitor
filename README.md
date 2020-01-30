@@ -1,4 +1,7 @@
+<div style="text-align: center; color:violet; font-size:70px; font-variant: small-caps;">monitor</div>
+
 # monitor
+
 
 ## Мониторинг состояния хостов,  контейнеров и приложений.
 
@@ -12,7 +15,7 @@
 и оповещение с помощью 
 [AlertManager](https://github.com/prometheus/alertmanager).
 
-Основано на [dockprom](https://github.com/stefanprodan/dockprom)
+
 
 
 
@@ -29,7 +32,7 @@
 
 <br>
 
-![схема](images/prometheus-on-docker.png)
+![схема](screens/prometheus-on-docker.png)
 
 
 Настройка Grafana
@@ -64,6 +67,16 @@ grafana:
 - Количество операций malloc в секунду
 - Тотальное количество аллоцированной памяти в данный момент.
 
+![rg services](screens/services_rg.png)
+
+Изначально на  панели показана небольшая часть метрик
+полный набор которых перечислен в файле 
+[go-application-metrics.sh](go-application-metrics.sh). 
+Чтобы метрики стали доступны для мониторинга
+в приложение необходимо добавить одну из 
+[клиентских библиотек Prometheus](https://prometheus.io/docs/instrumenting/clientlibs/). 
+Для приложений на Go можно применить https://github.com/prometheus/client_golang.
+
 
 
 Панель хоста (Docker Host)
@@ -79,6 +92,10 @@ grafana:
 - График использования IO (read Bps, read Bps and IO time).
 - График использования сети устройствами (входящий Bps, исходящий Bps).
 - Использование Swap и графики активности.
+
+![rg services](screens/scr_host.png)
+
+
 
 Панель контейнеров (Docker Containers)
 -------
@@ -97,6 +114,9 @@ grafana:
 На панели не представлены контейнеры, являющиеся частью стека мониторинга.
 
 
+![rg services](screens/scr_containers.png)
+
+
 Панель монитора сервисов Prometheus
 -------
 
@@ -109,6 +129,7 @@ grafana:
 - График HTTP-запросов Prometheus
 - График предупреждений Prometheus
 
+![Monitor Services](screens/Grafana_Prometheus.png)
 
 
 
@@ -158,3 +179,18 @@ receivers:
             channel: '#<channel>'
             api_url: 'https://hooks.slack.com/services/<webhook-id>'
 ```
+
+
+-----------------------------
+
+## Для разработчиков
+
+Весь значимый код находится в директории `deploy/`. 
+Запуск, останов, пуш, деплой
+
+    sh/up.sh
+    sh/down.sh
+    sh/push.sh
+    sh/deploy.sh
+
+Основано на [dockprom](https://github.com/stefanprodan/dockprom)
