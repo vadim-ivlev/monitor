@@ -1,5 +1,3 @@
-<div style="text-align: center; color:violet; font-size:70px; font-variant: small-caps;">monitor</div>
-
 # monitor
 
 
